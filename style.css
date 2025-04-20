@@ -1,0 +1,379 @@
+/* style.css */
+
+/* 1. Variables CSS (Similar al anterior, con algunos ajustes) */
+:root {
+  --font-primary: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-monospace: 'Courier New', Courier, monospace;
+
+  /* Tema Claro */
+  --clr-primary-400: #3498db; /* Azul principal */
+  --clr-primary-500: #2980b9; /* Azul más oscuro */
+  --clr-secondary-400: #e74c3c; /* Rojo (limpiar) */
+  --clr-secondary-500: #c0392b; /* Rojo oscuro */
+  --clr-accent-400: #2ecc71; /* Verde (guardar) */
+  --clr-accent-500: #27ae60; /* Verde oscuro */
+  --clr-info-400: #9b59b6; /* Púrpura (copiar) */
+  --clr-info-500: #8e44ad; /* Púrpura oscuro */
+
+  --clr-bg: #f8f9fa; /* Fondo body */
+  --clr-surface: #ffffff; /* Fondo contenedor principal */
+  --clr-surface-alt: #e9ecef; /* Fondo caja respuesta */
+  --clr-text: #212529; /* Texto principal */
+  --clr-text-muted: #6c757d; /* Texto secundario/placeholder */
+  --clr-border: #dee2e6; /* Bordes */
+  --clr-shadow: rgba(0, 0, 0, 0.08);
+  --clr-overlay-bg: rgba(255, 255, 255, 0.8);
+  --clr-theme-btn-bg: #eee;
+  --clr-theme-btn-hover: #ddd;
+
+  /* Tamaños y Espacios */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem;  /* 8px */
+  --spacing-md: 1rem;    /* 16px */
+  --spacing-lg: 1.5rem;  /* 24px */
+  --spacing-xl: 2rem;    /* 32px */
+  --border-radius: 6px;
+  --transition-fast: 0.2s ease;
+}
+
+/* Tema Oscuro */
+[data-theme="dark"] {
+  --clr-primary-400: #5dade2;
+  --clr-primary-500: #85c1e9;
+  --clr-secondary-400: #f1948a;
+  --clr-secondary-500: #e6b0aa;
+  --clr-accent-400: #7dcea0;
+  --clr-accent-500: #a9dfbf;
+  --clr-info-400: #bb86fc;
+  --clr-info-500: #a163f7;
+
+  --clr-bg: #121212;
+  --clr-surface: #1e1e1e;
+  --clr-surface-alt: #2a2a2a;
+  --clr-text: #e0e0e0;
+  --clr-text-muted: #a0a0a0;
+  --clr-border: #444;
+  --clr-shadow: rgba(0, 0, 0, 0.3);
+  --clr-overlay-bg: rgba(0, 0, 0, 0.7);
+  --clr-theme-btn-bg: #333;
+  --clr-theme-btn-hover: #444;
+}
+
+/* 2. Reset Básico y Estilos Globales */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  line-height: 1.6;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+/* 3. Layout Principal y Contenedor */
+.app-container {
+  max-width: 900px; /* Ancho máximo ajustado */
+  margin: var(--spacing-xl) auto;
+  padding: var(--spacing-lg);
+  background-color: var(--clr-surface);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px var(--clr-shadow);
+  transition: background-color var(--transition-fast);
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--clr-border);
+  padding-bottom: var(--spacing-md);
+}
+
+.header-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.app-header h1 {
+  font-size: 1.8rem; /* Tamaño ajustado */
+  margin-bottom: var(--spacing-xs);
+  color: var(--clr-primary-400); /* Color de título */
+}
+[data-theme="dark"] .app-header h1 {
+    color: var(--clr-primary-400);
+}
+
+.app-header p {
+    color: var(--clr-text-muted);
+    font-size: 0.95rem;
+}
+
+/* 4. Secciones de Input y Output */
+.input-section, .output-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.prompt-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--spacing-md);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  background-color: var(--clr-surface); /* Fondo igual que el contenedor */
+  color: var(--clr-text);
+  margin-bottom: var(--spacing-md);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.prompt-textarea:focus {
+  outline: none;
+  border-color: var(--clr-primary-400);
+  box-shadow: 0 0 0 3px rgba(var(--clr-primary-400), 0.1);
+}
+
+.prompt-textarea::placeholder {
+  color: var(--clr-text-muted);
+}
+
+.response-box {
+  background-color: var(--clr-surface-alt);
+  padding: var(--spacing-md);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--border-radius);
+  min-height: 200px;
+  font-family: var(--font-primary); /* Fuente normal por defecto */
+  font-size: 0.95rem; /* Ligeramente más pequeño */
+  color: var(--clr-text);
+  overflow-wrap: break-word;
+  white-space: pre-wrap; /* Mantiene formato y permite wrap */
+  overflow-x: auto; /* Scroll horizontal si es necesario */
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.response-box p:first-child { margin-top: 0; }
+.response-box p:last-child { margin-bottom: 0; }
+
+.response-box p,
+.response-box ul,
+.response-box ol,
+.response-box pre {
+    margin-bottom: var(--spacing-sm); /* Espacio entre párrafos/bloques */
+}
+.response-box li {
+    margin-left: var(--spacing-md);
+}
+
+.response-box a {
+    color: var(--clr-primary-400);
+    text-decoration: none;
+}
+.response-box a:hover {
+    text-decoration: underline;
+    color: var(--clr-primary-500);
+}
+
+/* Código inline */
+.response-box code:not([class*="language-"]) {
+  background-color: rgba(128, 128, 128, 0.15);
+  padding: 0.15em 0.3em;
+  border-radius: 3px;
+  font-size: 90%;
+}
+[data-theme="dark"] .response-box code:not([class*="language-"]) {
+   background-color: rgba(200, 200, 200, 0.2);
+}
+
+/* Bloques de código Prism */
+.response-box pre[class*="language-"] {
+    background-color: var(--clr-surface); /* Fondo como el contenedor */
+    border: 1px solid var(--clr-border);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    overflow: auto;
+}
+[data-theme="dark"] .response-box pre[class*="language-"] {
+    background-color: #2d2d2d; /* Fondo específico para código en oscuro */
+    border-color: #555;
+}
+
+.response-box .error-text {
+    color: var(--clr-secondary-400);
+    font-weight: bold;
+}
+
+
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.output-header h2 {
+  font-size: 1.1rem;
+  color: var(--clr-text-muted);
+  font-weight: 600;
+}
+
+/* 5. Botones */
+.action-buttons, .output-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: 0.6rem 1.2rem; /* Padding ajustado */
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff; /* Texto blanco por defecto en botones de color */
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+  text-align: center;
+}
+
+button svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1); /* Efecto brillo en hover */
+}
+button:not(:disabled):active {
+  transform: translateY(0px);
+  filter: brightness(0.95);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #adb5bd; /* Gris para deshabilitado */
+}
+
+/* Colores específicos de botones */
+#submit-button { background-color: var(--clr-primary-400); }
+#clear-button { background-color: var(--clr-secondary-400); }
+#copy-button { background-color: var(--clr-info-400); }
+#save-button { background-color: var(--clr-accent-400); }
+
+/* Botones de acción (copiar/guardar) podrían ser más pequeños */
+.output-actions button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* 6. Indicador de Carga */
+.loader-overlay {
+  position: fixed;
+  inset: 0; /* Igual que top: 0; right: 0; bottom: 0; left: 0; */
+  background-color: var(--clr-overlay-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  gap: var(--spacing-sm);
+  color: var(--clr-text);
+  transition: background-color var(--transition-fast);
+}
+
+.spinner {
+  width: 35px; height: 35px;
+  border: 4px solid rgba(128, 128, 128, 0.3);
+  border-top-color: var(--clr-primary-400);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 7. Botón de Tema */
+.theme-switcher {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  z-index: 10;
+}
+
+#theme-btn {
+  background-color: var(--clr-theme-btn-bg);
+  color: var(--clr-text);
+  border: 1px solid var(--clr-border);
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  font-size: 1.4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+#theme-btn:hover {
+  background-color: var(--clr-theme-btn-hover);
+  transform: scale(1.1) rotate(15deg);
+}
+
+/* 8. Responsividad */
+@media (max-width: 768px) {
+  body { font-size: 15px; } /* Ajusta base en pantallas pequeñas */
+  .app-container {
+    margin: var(--spacing-md) auto;
+    padding: var(--spacing-md);
+  }
+  .app-header h1 { font-size: 1.6rem; }
+  .action-buttons {
+      flex-direction: column;
+      align-items: stretch; /* Botones ocupan ancho */
+  }
+  .output-header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  .output-actions {
+      width: 100%;
+      justify-content: flex-start;
+  }
+   .output-actions button {
+       flex-grow: 1; /* Botones crecen para llenar espacio */
+       max-width: calc(50% - var(--spacing-xs)); /* Limita a 2 por fila */
+   }
+   .theme-switcher {
+       top: var(--spacing-sm);
+       right: var(--spacing-sm);
+   }
+   #theme-btn { width: 34px; height: 34px; font-size: 1.2rem; }
+}
+
+@media (max-width: 480px) {
+   .app-header h1 { font-size: 1.4rem; }
+   .output-actions button { max-width: 100%; } /* 1 botón por fila */
+   button { padding: 0.5rem 1rem; } /* Reduce padding general de botones */
+   .output-actions button { padding: 0.4rem 0.8rem; }
+}

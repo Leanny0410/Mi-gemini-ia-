@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <!-- Icono personalizado (puedes cambiarlo si tienes uno) -->
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='50%' dominant-baseline='middle' text-anchor='middle' x='50%' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leanny IA - ChatBot</title> <!-- Título Actualizado -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="theme-switcher">
+        <button id="theme-btn" title="Cambiar Tema">🌙</button>
+    </div>
+
+    <main class="app-container">
+        <header class="app-header">
+             <!-- Icono SVG simple de un bot -->
+             <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="12" width="16" height="8" rx="2"/><path d="M4 14h16"/><path d="M15 7h1a2 2 0 0 1 2 2v2.5"/><path d="M8 7H7a2 2 0 0 0-2 2v2.5"/><path d="M7 12v-2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V12"/><path d="M15 12v-2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V12"/><path d="M7 16v.01"/><path d="M17 16v.01"/></svg>
+            <h1>Leanny IA</h1> <!-- Nombre Actualizado -->
+            <p>Hola, soy Leanny IA. Pregúntame algo de mi lista.</p> <!-- Subtítulo Actualizado -->
+        </header>
+
+        <section class="input-section">
+            <textarea id="prompt-input" class="prompt-textarea" placeholder="Escribe aquí... ej: ¿Quién eres?, ¿Qué es una API?, ¿Capital de Francia?"></textarea> <!-- Placeholder actualizado -->
+            <div class="action-buttons">
+                <button id="submit-button" title="Enviar Pregunta">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/></svg>
+                    <span>Enviar</span>
+                </button>
+                <button id="clear-button" title="Limpiar Todo">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm-9.954 1H14.454l-.848 10.58a1 1 0 0 1-.997.92H4.885a1 1 0 0 1-.997-.92zm2.94 1.84V14H6v-7.66zm3 0V14h1v-7.66zm3 0V14h1v-7.66z"/></svg>
+                    <span>Limpiar</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="output-section">
+            <div class="output-header">
+                <h2>Respuesta de Leanny IA:</h2> <!-- Nombre Actualizado -->
+                <div class="output-actions">
+                    <button id="copy-button" title="Copiar Respuesta" disabled>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/></svg>
+                        <span>Copiar</span>
+                    </button>
+                    <button id="save-button" title="Guardar como TXT" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16"><path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/></svg>
+                        <span>Guardar</span>
+                    </button>
+                </div>
+            </div>
+            <div id="response-box" class="response-box">
+                <p>¡Hola! Soy Leanny IA. ¿Listo para preguntar?</p> <!-- Mensaje inicial Actualizado -->
+            </div>
+        </section>
+
+        <div id="loader" class="loader-overlay" style="display: none;">
+            <div class="spinner"></div>
+            <p>Procesando...</p> <!-- Texto ajustado -->
+        </div>
+    </main>
+
+    <!-- Librerías JS -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <!-- Script principal de la aplicación -->
+    <script>
+        // --- Referencias a Elementos del DOM ---
+        const promptInput = document.getElementById('prompt-input');
+        const submitButton = document.getElementById('submit-button');
+        const clearButton = document.getElementById('clear-button');
+        const responseBox = document.getElementById('response-box');
+        const copyButton = document.getElementById('copy-button');
+        const saveButton = document.getElementById('save-button');
+        const themeButton = document.getElementById('theme-btn');
+        const loader = document.getElementById('loader');
+        const htmlElement = document.documentElement;
+
+        // --- Estado Inicial ---
+        copyButton.disabled = true;
+        saveButton.disabled = true;
+
+        // --- Lógica del Tema ---
+        function applyTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            themeButton.textContent = theme === 'light' ? '🌙' : '☀️';
+            localStorage.setItem('appTheme', theme);
+            const prismLink = document.querySelector('link[href*="prism"]');
+            if (prismLink) {
+                prismLink.href = theme === 'dark'
+                    ? 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css'
+                    : 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css';
+            }
+        }
+        themeButton.addEventListener('click', () => {
+            const newTheme = htmlElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
+        const savedTheme = localStorage.getItem('appTheme') || 'light';
+        applyTheme(savedTheme);
+
+        // ===========================================================
+        // --- BASE DE DATOS DE PREGUNTAS Y RESPUESTAS DE LEANNY IA ---
+        // ===========================================================
+        const predefinedQA = [
+            // --- Preguntas específicas solicitadas ---
+            {
+                question: "quien eres",
+                question_alt: "quien eres y que puedes hacer por mi",
+                answer: "Soy Leanny IA, un asistente virtual basado en texto con respuestas predefinidas. Estoy aquí para responder a preguntas de mi lista sobre diversos temas como cultura general, tecnología básica, y más. ¡Pregúntame!"
+            },
+            {
+                question: "que es una api",
+                question_alt: "que es una api y una api rest",
+                answer: "Una **API** (Interfaz de Programación de Aplicaciones) es como un conjunto de reglas y herramientas que permiten que diferentes programas o servicios 'hablen' entre sí e intercambien información de forma estructurada. \nUna **API REST** es un tipo muy común de API web que sigue los principios de diseño REST (Transferencia de Estado Representacional). Usa métodos HTTP estándar (como GET para obtener datos, POST para crear, etc.) y generalmente trabaja con formatos como JSON. Simplifica mucho la comunicación entre sistemas en la web."
+            },
+            {
+                question: "cual es la diferencia entre api y api rest", // Pregunta más específica
+                answer: "La principal diferencia es que 'API' es el término general para cualquier interfaz que permita la comunicación entre software. En cambio, 'REST' es un conjunto específico de reglas o estilo arquitectónico para diseñar APIs web, enfocado en la simplicidad, escalabilidad y el uso de estándares HTTP."
+            },
+
+            // --- Las 20 preguntas proporcionadas por el usuario ---
+            {
+                question: "que tiempo hace hoy",
+                question_alt: "como esta el clima",
+                answer: "¡Buena pregunta! Para darte el pronóstico del tiempo, necesitaría saber tu ubicación actual. Como soy un bot simple, no tengo acceso a esa información."
+            },
+            {
+                question: "cual es la capital de francia",
+                answer: "La capital de Francia es **París**."
+            },
+            {
+                question: "como se prepara una tortilla española",
+                answer: "Para una tortilla española clásica necesitas patatas, cebolla (opcional para algunos), huevos, sal y aceite de oliva. \n1. Pela y corta las patatas en rodajas finas (y la cebolla si usas). \n2. Fríelas lentamente en abundante aceite hasta que estén tiernas. Escúrrelas bien. \n3. Bate los huevos en un bol grande con sal. \n4. Añade las patatas (y cebolla) fritas a los huevos batidos y mezcla. \n5. Calienta un poco de aceite en una sartén antiadherente, vierte la mezcla y cocina a fuego medio-bajo. \n6. Cuando esté cuajada por abajo, dale la vuelta con ayuda de un plato y cocina por el otro lado hasta que esté a tu gusto. ¡Listo!"
+            },
+            {
+                question: "que es la inteligencia artificial",
+                question_alt: "que es ia",
+                answer: "La **Inteligencia Artificial (IA)** es un área de la informática dedicada a crear sistemas o máquinas capaces de realizar tareas que normalmente requieren inteligencia humana, como aprender, razonar, resolver problemas, percibir, comprender el lenguaje y tomar decisiones."
+            },
+            {
+                question: "cual es la formula de la relatividad de einstein",
+                question_alt: "formula einstein",
+                // Usamos Markdown para formato simple, el navegador no interpretará LaTeX directamente
+                answer: "La fórmula más famosa de Einstein, parte de su teoría de la relatividad especial, es **E = mc²**. Esta ecuación expresa la equivalencia entre la energía (E) y la masa (m), donde 'c' es la velocidad de la luz en el vacío. Significa que una pequeña cantidad de masa puede convertirse en una gran cantidad de energía (y viceversa)."
+            },
+            {
+                question: "como puedo mejorar mi productividad",
+                answer: "¡Mejorar la productividad es un gran objetivo! Aquí tienes algunas ideas: \n*   **Define metas claras:** Saber qué quieres lograr. \n*   **Prioriza:** Enfócate en lo más importante primero. \n*   **Técnica Pomodoro:** Trabaja en bloques de tiempo (ej. 25 min) con descansos cortos. \n*   **Minimiza distracciones:** Silencia notificaciones innecesarias. \n*   **Organiza tu espacio:** Un lugar ordenado ayuda a la concentración. \n*   **Descansa bien:** Dormir lo suficiente es crucial."
+            },
+            {
+                question: "que libros me recomiendas para aprender sobre liderazgo",
+                answer: "Hay muchos libros excelentes sobre liderazgo. Dos clásicos muy recomendados son: \n1.  **'Los 7 hábitos de la gente altamente efectiva'** de Stephen Covey. \n2.  **'Cómo ganar amigos e influir sobre las personas'** de Dale Carnegie (aunque no es solo de liderazgo, es fundamental para las relaciones interpersonales). \nOtros populares incluyen 'Inteligencia Emocional' de Daniel Goleman y 'Empieza con el porqué' de Simon Sinek."
+            },
+            {
+                question: "como se dice hola como estas en frances",
+                answer: "En francés se dice: **'Bonjour, comment ça va ?'** o de forma más informal **'Salut, ça va ?'**."
+            },
+            {
+                question: "que es el cambio climatico",
+                answer: "El **cambio climático** se refiere a los cambios a largo plazo en las temperaturas y los patrones climáticos de la Tierra. Aunque ha habido cambios naturales en el pasado, desde el siglo XIX, las actividades humanas (principalmente la quema de combustibles fósiles como carbón, petróleo y gas) han sido el principal impulsor, aumentando los gases de efecto invernadero en la atmósfera."
+            },
+            {
+                question: "como puedo aprender a programar",
+                answer: "¡Aprender a programar es accesible! Aquí tienes pasos comunes: \n1.  **Elige un lenguaje para empezar:** Python es muy recomendado para principiantes por su sintaxis clara. JavaScript es esencial para desarrollo web. \n2.  **Usa recursos en línea:** Plataformas como Codecademy, freeCodeCamp, Khan Academy, Coursera, edX ofrecen cursos gratuitos y de pago. \n3.  **Practica constantemente:** La programación se aprende haciendo. Resuelve pequeños problemas, crea proyectos simples. \n4.  **Lee código de otros:** Ayuda a entender diferentes enfoques. \n5.  **Únete a comunidades:** Foros como Stack Overflow o grupos de Discord pueden ser muy útiles."
+            },
+            {
+                question: "que es el big bang",
+                answer: "El **Big Bang** es la teoría cosmológica predominante sobre el origen del universo. Sugiere que el universo comenzó como un punto extremadamente caliente y denso hace unos 13.8 mil millones de años, y desde entonces se ha estado expandiendo y enfriando, formando galaxias, estrellas y planetas."
+            },
+            {
+                question: "cuales son los beneficios de hacer ejercicio regularmente",
+                question_alt: "para que sirve hacer ejercicio",
+                answer: "Hacer ejercicio regularmente tiene muchísimos beneficios: \n*   **Salud cardiovascular:** Fortalece el corazón y mejora la circulación. \n*   **Control de peso:** Ayuda a quemar calorías y mantener un peso saludable. \n*   **Fortalecimiento muscular y óseo:** Reduce el riesgo de osteoporosis y mejora la fuerza. \n*   **Salud mental:** Reduce el estrés, la ansiedad y la depresión, y mejora el estado de ánimo y el sueño. \n*   **Aumento de energía:** Aunque parezca contradictorio, te da más vitalidad."
+            },
+            {
+                question: "que es la economia circular",
+                answer: "La **economía circular** es un modelo de producción y consumo que busca extender el ciclo de vida de los productos. Se centra en compartir, alquilar, reutilizar, reparar, renovar y reciclar materiales y productos existentes durante el mayor tiempo posible. El objetivo es reducir los residuos al mínimo y aprovechar al máximo los recursos, en contraste con el modelo lineal tradicional de 'tomar, hacer, desechar'."
+            },
+            {
+                question: "como puedo mejorar mi ingles",
+                answer: "Mejorar tu inglés requiere práctica constante. Aquí tienes algunas estrategias: \n*   **Inmersión:** Escucha música, podcasts, mira películas y series en inglés (con o sin subtítulos según tu nivel). \n*   **Práctica oral:** Intenta hablar, aunque sea solo contigo mismo o con otros estudiantes/hablantes nativos (apps como Tandem o HelloTalk pueden ayudar). \n*   **Lectura:** Lee artículos, noticias, libros en inglés adecuados a tu nivel. \n*   **Vocabulario:** Usa apps como Duolingo, Memrise o Anki para aprender palabras nuevas. \n*   **Gramática:** Consulta recursos en línea o libros para entender las reglas. \n*   **¡No tengas miedo a equivocarte!** Es parte del aprendizaje."
+            },
+            {
+                question: "que es el blockchain",
+                question_alt: "que es blockchain",
+                answer: "**Blockchain** (cadena de bloques) es una tecnología de registro digital distribuido, descentralizado e inmutable. Imagina un libro de contabilidad digital que se comparte entre muchas computadoras. Cada 'bloque' contiene un conjunto de transacciones, y cada nuevo bloque se enlaza criptográficamente al anterior, formando una 'cadena'. Esto hace que sea muy difícil alterar la información una vez registrada. Es la tecnología detrás de muchas criptomonedas como Bitcoin."
+            },
+            {
+                question: "como se prepara un buen cafe",
+                answer: "Preparar un 'buen' café depende mucho del gusto personal, ¡pero aquí hay claves generales! \n1.  **Café de calidad y fresco:** Usa granos recién tostados si es posible y muélelos justo antes de prepararlo. \n2.  **Molienda adecuada:** Ajusta el grosor de la molienda al método que uses (gruesa para prensa francesa, media para goteo, fina para espresso). \n3.  **Agua de calidad:** Usa agua filtrada si es posible, calentada a la temperatura correcta (generalmente entre 90°C y 96°C, no hirviendo). \n4.  **Proporción correcta:** Una guía común es usar entre 10 y 15 gramos de café por cada 180 ml de agua. ¡Experimenta! \n5.  **Método de preparación:** Elige el que prefieras (prensa francesa, V60, Aeropress, cafetera italiana, espresso...) y sigue sus pasos."
+            },
+            {
+                question: "que es el machine learning",
+                question_alt: "que es machine learning",
+                answer: "El **Machine Learning** (Aprendizaje Automático) es una rama de la Inteligencia Artificial. Se enfoca en desarrollar algoritmos que permiten a las computadoras 'aprender' de los datos sin ser programadas explícitamente para cada tarea. Analizan grandes cantidades de datos, identifican patrones y toman decisiones o hacen predicciones basadas en ese aprendizaje. Ejemplos incluyen sistemas de recomendación (Netflix, Spotify) y reconocimiento de imágenes."
+            },
+            {
+                question: "cuales son los sintomas del covid-19",
+                question_alt: "sintomas covid",
+                answer: "Los síntomas del COVID-19 pueden variar mucho, pero los más comunes incluyen: \n*   Fiebre o escalofríos \n*   Tos \n*   Falta de aire o dificultad para respirar \n*   Fatiga \n*   Dolores musculares o corporales \n*   Dolor de cabeza \n*   Pérdida reciente del olfato o del gusto \n*   Dolor de garganta \n*   Congestión o secreción nasal \n*   Náuseas, vómitos o diarrea. \n**Importante:** Si tienes síntomas graves, busca atención médica."
+            },
+            {
+                question: "como puedo ahorrar dinero",
+                answer: "Ahorrar dinero es un hábito importante. Aquí tienes algunas estrategias: \n1.  **Haz un presupuesto:** Registra tus ingresos y gastos para saber a dónde va tu dinero. \n2.  **Establece metas de ahorro:** ¿Para qué quieres ahorrar? (Emergencias, viaje, entrada de piso...). \n3.  **Págate a ti primero:** Automatiza una transferencia a tu cuenta de ahorros cada vez que cobres. \n4.  **Reduce gastos innecesarios:** Identifica dónde puedes recortar (suscripciones que no usas, comidas fuera frecuentes...). \n5.  **Compara precios:** Antes de hacer compras grandes, busca ofertas y compara. \n6.  **Cocina más en casa:** Suele ser más económico que comer fuera."
+            },
+            {
+                question: "que es la sostenibilidad",
+                answer: "La **sostenibilidad** consiste en satisfacer las necesidades del presente sin comprometer la capacidad de las generaciones futuras para satisfacer las suyas. Se basa en tres pilares interconectados: \n1.  **Ambiental:** Proteger los ecosistemas, conservar recursos naturales, reducir la contaminación. \n2.  **Social:** Asegurar la equidad, la salud, la educación y el bienestar de las personas. \n3.  **Económico:** Promover un crecimiento económico que sea viable a largo plazo y justo para la sociedad."
+            },
+
+            // --- Preguntas adicionales añadidas por la IA ---
+            {
+                question: "hola", // Para saludo inicial
+                answer: "¡Hola! Soy Leanny IA. 😊 ¿En qué te puedo ayudar hoy?"
+            },
+            {
+                 question: "cómo estás", // Sin tilde intencionalmente
+                 question_alt: "como estas", // Alternativa común
+                 answer: "Como programa, ¡siempre estoy funcionando perfectamente! Listo para charlar."
+            },
+            {
+                question: "puedes contar un chiste",
+                question_alt: "cuentame un chiste",
+                answer: "¡Claro! Aquí va uno: ¿Qué le dice un jaguar a otro jaguar? ¡'Jaguar you?' 😄"
+            },
+            {
+                question: "que dia es hoy",
+                answer: "No tengo acceso a un calendario en tiempo real, ¡pero espero que estés teniendo un día fantástico!"
+            },
+            {
+                question: "que significa chatbot",
+                answer: "Un 'chatbot' es un programa informático diseñado para simular conversaciones con usuarios humanos, especialmente a través de interfaces de texto o voz. ¡Como yo!"
+            },
+            {
+                question: "como funciona internet",
+                answer: "Uf, ¡es complejo! Pero de forma muy simple: Internet es una red gigante que conecta millones de computadoras en todo el mundo. Usan lenguajes comunes (protocolos como TCP/IP) para enviarse paquetes de datos. Cuando visitas una web, tu navegador pide esos datos a un servidor, y viajan por cables submarinos, satélites y redes locales hasta llegar a tu pantalla."
+            },
+            {
+                question: "gracias", // Para cortesía
+                answer: "¡De nada! Si necesitas algo más, no dudes en preguntar. 😉"
+            },
+            {
+                question: "adios",
+                question_alt: "chao", // Alternativa
+                answer: "¡Hasta la próxima! Ha sido un placer charlar contigo. 👋"
+            }
+        ];
+
+        // --- Función para encontrar la respuesta (igual que antes) ---
+        function findAnswer(userInput) {
+            const processedInput = userInput.toLowerCase().trim()
+                                          .replace(/[¿?¡!,.:;]/g, ''); // Quita más puntuación
+
+            // Buscar coincidencia exacta primero
+             for (const qa of predefinedQA) {
+                 const questionProcessed = qa.question.toLowerCase().trim().replace(/[¿?¡!,.:;]/g, '');
+                 const altQuestionProcessed = qa.question_alt ? qa.question_alt.toLowerCase().trim().replace(/[¿?¡!,.:;]/g, '') : null;
+
+                if (processedInput === questionProcessed || (altQuestionProcessed && processedInput === altQuestionProcessed)) {
+                    console.log(`Match found for: "${userInput}" -> "${qa.question}"`);
+                    return qa.answer;
+                }
+            }
+
+            // Si no hay coincidencia exacta, buscar si la entrada CONTIENE alguna palabra clave (simple)
+            // Esto es muy básico, podría mejorarse mucho
+             const wordsInInput = processedInput.split(/\s+/); // Divide en palabras
+             let bestMatch = null;
+             let maxMatchCount = 0;
+
+             for (const qa of predefinedQA) {
+                 const questionWords = qa.question.toLowerCase().trim().replace(/[¿?¡!,.:;]/g, '').split(/\s+/);
+                 let currentMatchCount = 0;
+                 for(const word of wordsInInput) {
+                     if (word.length > 2 && questionWords.includes(word)) { // Ignora palabras cortas
+                         currentMatchCount++;
+                     }
+                 }
+                 if (currentMatchCount > maxMatchCount) {
+                     maxMatchCount = currentMatchCount;
+                     bestMatch = qa.answer;
+                 }
+             }
+
+             if (bestMatch && maxMatchCount > 1) { // Requiere al menos 2 palabras clave coincidentes
+                  console.log(`Partial match found for: "${userInput}"`);
+                 return bestMatch;
+             }
+
+
+            // Respuesta por defecto si no se encuentra nada
+             console.log(`No match found for: "${userInput}"`);
+            return "Lo siento, no estoy segura de entender eso. ¿Podrías reformular tu pregunta? Puedes escribir 'ayuda' para ver ejemplos de lo que sé.";
+        }
+
+        // --- Función Principal Modificada (igual que antes) ---
+        function handleUserSubmit() {
+            const userQuestion = promptInput.value.trim();
+            if (!userQuestion) {
+                showUserMessage('Por favor, escribe una pregunta.', 'warning');
+                return;
+            }
+
+            setLoadingState(true);
+            responseBox.innerHTML = '<p>Pensando...</p>'; // Mensaje mientras "piensa"
+            copyButton.disabled = true;
+            saveButton.disabled = true;
+
+            setTimeout(() => {
+                const botAnswer = findAnswer(userQuestion);
+                displayFormattedResult(botAnswer);
+                copyButton.disabled = false;
+                saveButton.disabled = false;
+                setLoadingState(false);
+            }, 400 + Math.random() * 400); // Retraso ligeramente más corto
+        }
+
+        // --- Funciones Auxiliares (igual que antes) ---
+         function displayFormattedResult(text) {
+             responseBox.innerHTML = marked.parse(text);
+             Prism.highlightAllUnder(responseBox);
+        }
+
+        function handleClear() {
+            promptInput.value = '';
+            responseBox.innerHTML = '<p>¡Hola! Soy Leanny IA. ¿Listo para preguntar?</p>'; // Restaura mensaje inicial
+            copyButton.disabled = true;
+            saveButton.disabled = true;
+        }
+
+        async function handleCopyToClipboard() {
+            const text = responseBox.innerText;
+             if (!text || responseBox.textContent.includes('¿Listo para preguntar?') || responseBox.textContent.includes('Pensando...')) {
+                 showUserMessage('No hay contenido válido para copiar.', 'info');
+                 return;
+             }
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalContent = copyButton.innerHTML;
+                copyButton.innerHTML = `<span>¡Copiado!</span>`;
+                copyButton.disabled = true;
+                setTimeout(() => {
+                    copyButton.innerHTML = originalContent;
+                    copyButton.disabled = false;
+                }, 1500);
+            } catch (err) {
+                console.error('Fallo al copiar:', err);
+                showUserMessage('Error al copiar al portapapeles.', 'error');
+            }
+        }
+
+        function handleSaveToFile() {
+             const text = responseBox.innerText;
+              if (!text || responseBox.textContent.includes('¿Listo para preguntar?') || responseBox.textContent.includes('Pensando...')) {
+                 showUserMessage('No hay contenido válido para guardar.', 'info');
+                 return;
+             }
+            try {
+                const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `leanny-ia-respuesta-${Date.now()}.txt`; // Nombre de archivo actualizado
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error("Error al guardar:", error);
+                showUserMessage('No se pudo guardar el archivo.', 'error');
+            }
+        }
+
+        function setLoadingState(isLoading) {
+            loader.style.display = isLoading ? 'flex' : 'none';
+            submitButton.disabled = isLoading;
+            clearButton.disabled = isLoading;
+        }
+
+        function showUserMessage(message, type = 'info') {
+            alert(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        // --- Event Listeners ---
+        submitButton.addEventListener('click', handleUserSubmit);
+        clearButton.addEventListener('click', handleClear);
+        copyButton.addEventListener('click', handleCopyToClipboard);
+        saveButton.addEventListener('click', handleSaveToFile);
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !(e.ctrlKey || e.metaKey || e.shiftKey)) { // Enviar con Enter (sin modificadores)
+                e.preventDefault(); // Evita salto de línea
+                handleUserSubmit();
+            }
+        });
+
+        console.log("Leanny IA listo para conversar.");
+
+    </script>
+</body>
+</html>
